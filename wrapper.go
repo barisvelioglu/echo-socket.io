@@ -2,8 +2,9 @@ package echo_socket_io
 
 import (
 	"errors"
-	engineio "github.com/googollee/go-engine.io"
+
 	socketio "github.com/googollee/go-socket.io"
+	"github.com/googollee/go-socket.io/engineio"
 	"github.com/labstack/echo/v4"
 )
 
@@ -23,11 +24,7 @@ type Wrapper struct {
 
 // Create wrapper and Socket.io server
 func NewWrapper(options *engineio.Options) (*Wrapper, error) {
-	server, err := socketio.NewServer(options)
-	if err != nil {
-		return nil, err
-	}
-
+	server := socketio.NewServer(options)
 	return &Wrapper{
 		Server: server,
 	}, nil
@@ -60,8 +57,8 @@ func (s *Wrapper) OnDisconnect(nsp string, f func(echo.Context, socketio.Conn, s
 
 // On Socket.io error
 func (s *Wrapper) OnError(nsp string, f func(echo.Context, error)) {
-	s.Server.OnError(nsp, func(err error) {
-		f(s.Context, err)
+	s.Server.OnError(nsp, func(c socketio.Conn, e error) {
+		f(s.Context, e)
 	})
 }
 
@@ -75,13 +72,12 @@ func (s *Wrapper) OnEvent(nsp, event string, f func(echo.Context, socketio.Conn,
 // Handler function
 func (s *Wrapper) HandlerFunc(context echo.Context) error {
 	go s.Server.Serve()
-	
+
 	context.Request().Header.Set("Access-Control-Allow-Origin", "*")
 	context.Request().Header.Set("Access-Control-Allow-Credentials", "true")
 	context.Request().Header.Set("Access-Control-Allow-Methods", "POST, PUT, PATCH, GET, DELETE, OPTIONS")
 	context.Request().Header.Set("Access-Control-Allow-Headers", "Accept, Content-Type, Content-Length, Accept-Encoding")
 
-	
 	s.Context = context
 	s.Server.ServeHTTP(context.Response(), context.Request())
 	return nil

@@ -4,15 +4,17 @@ go 1.17
 
 require (
 	github.com/googollee/go-engine.io v1.4.2
-	github.com/googollee/go-socket.io v1.4.2
-	github.com/gorilla/websocket v1.4.1 // indirect
+	github.com/googollee/go-socket.io v1.6.1
+	github.com/gorilla/websocket v1.4.2 // indirect
 	github.com/labstack/echo/v4 v4.1.15
-	github.com/stretchr/testify v1.4.0
+	github.com/stretchr/testify v1.5.1
 	github.com/umirode/echo-socket.io v0.0.0-20200303070703-1f52ed4a3363
 )
 
 require (
 	github.com/davecgh/go-spew v1.1.1 // indirect
+	github.com/gofrs/uuid v4.0.0+incompatible // indirect
+	github.com/gomodule/redigo v2.0.0+incompatible // indirect
 	github.com/labstack/gommon v0.3.0 // indirect
 	github.com/mattn/go-colorable v0.1.6 // indirect
 	github.com/mattn/go-isatty v0.0.12 // indirect
@@ -23,5 +25,5 @@ require (
 	golang.org/x/net v0.0.0-20200226121028-0de0cce0169b // indirect
 	golang.org/x/sys v0.0.0-20200223170610-d5e6a3e2c0ae // indirect
 	golang.org/x/text v0.3.2 // indirect
-	gopkg.in/yaml.v2 v2.2.2 // indirect
+	gopkg.in/yaml.v2 v2.2.4 // indirect
 )
